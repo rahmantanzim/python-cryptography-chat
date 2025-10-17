@@ -1,0 +1,6 @@
+#Python
+*.pyc
+*.log
+
+#Cryptography keys
+*.pem
