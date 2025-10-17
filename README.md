@@ -1,4 +1,4 @@
-# Cryptography Chat 🔒
+# Encrypted Chat with Cryptography  🔒
 
 A secure, peer-to-peer (P2P) command-line chat application built with Python. This project uses RSA public-key cryptography to ensure that all messages are sent with end-to-end encryption, guaranteeing confidentiality and privacy.
 
