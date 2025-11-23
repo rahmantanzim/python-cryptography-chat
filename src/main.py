@@ -36,3 +36,28 @@ def cli_test_crypto():
         print("Did you run `python -m src.main generate-keys` first?")
     except Exception as exc:
         print(f"[ERROR] Crypto test failed: {exc}")      
+def main():
+    pass
+    if len(sys.argv) < 2:
+        print(f"CLI User Manual:")
+        print("python -m src.main generate-keys")
+        print("  python -m src.main test-crypto")
+        
+        sys.exit(1)
+    
+    cmd = sys.argv[1]
+    
+    if cmd == 'generate-keys':
+        cli_generate_keys()
+    elif cmd == 'test-crypto':
+        cli_test_crypto()
+    else:
+        print(f"Unknown Command: {cmd}")
+        print("Please use: generate-keys, test-crypto")
+        sys.exit(1)
+            
+if __name__ == "__main__":
+    main() #run main() when the file is executed directly,
+         
+            
+        
