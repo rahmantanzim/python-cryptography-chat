@@ -34,7 +34,7 @@ def gen_and_save_keys(
     
     #serialization: Private key
     with open(private_key_path,'wb') as f:
-        f.write(private_key.private_bytes(p
+        f.write(private_key.private_bytes(
             encoding=serialization.Encoding.PEM, #key will be encoded in PEM format
             format=serialization.PrivateFormat.PKCS8, #modern recommended format for private keys.
             encryption_algorithm= serialization.NoEncryption(), #private key file will be plain-text PEM without a password
@@ -59,15 +59,57 @@ def load_private_key(path:str = DEFAULT_PRIVATE_KEY_PATH):
     except FileNotFoundError:
         raise FileNotFoundError(f"Private key could not be found at: {path} ")
     except Exception as exc: #exc keeps the original error attached
-        raise ValueError(f"Failped to load private key: {exc}") from exc            
+        raise ValueError(f"Failled to load private key: {exc}") from exc            
 
 def load_public_key(path: str = DEFAULT_PUBLIC_KEY_PATH):
     #Load the public key from the PEM file
     try:
         with open(path,'rb') as f:
-            public_key = serialization.load_pem_public_key(f.read())
+            public_key = serialization.load_pem_public_key(
+                f.read() # reads PEM bytes from the file in Path
+            ) # This creates a public key object from the PEM bytes 
         return public_key
     except FileNotFoundError:
         raise FileNotFoundError(f"public key file could not be found at {path}")
     except Exception as exc:
         raise ValueError(f"Failed to load public key from {path}: {exc}") from exc
+    
+#Encryption
+def encrypt_message(message: str, public_key) -> bytes:
+    #Encrypts the message using the public key and returns Encrypted bytes
+    if not isinstance(message, str):
+        raise TypeError("message must be a str")
+    message_bytes = message.encode("utf-8")
+
+    cipherText = public_key.encrypt(
+        message_bytes,
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None,
+        )
+    )
+    return cipherText
+    
+#Decryption
+def decrypt_message(encrypted_data: bytes, private_key) ->str:
+    #decrypts the encrypted bytes using the private key and returns a string
+    
+    if not isinstance(encrypted_data, (bytes, bytearray)):
+        raise TypeError("encrypted_data must be bytes or bytearray")
+    
+    try:
+        decrypted_bytes = private_key.decrypt(
+            encrypted_data,
+            padding.OAEP(
+                mgf=padding.MGF1(algorithm=hashes.SHA256()),
+                algorithm=hashes.SHA256(),
+                label=None,
+            ),
+        )
+        return decrypted_bytes.decode("utf-8")
+    except Exception as exc:
+        # In chat_app we can catch this and show a user-friendly error.
+        raise ValueError(f"Decryption failed: {exc}") from exc
+    
+    
