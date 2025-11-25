@@ -1,6 +1,7 @@
 #This is the entry point of the application
 import sys
-from security import key_manager
+from src.security import key_manager
+
 
 def cli_generate_keys():
     try:
@@ -17,7 +18,7 @@ def cli_test_crypto():
         private_key = key_manager.load_private_key()
         public_key = key_manager.load_public_key()
         
-        test_message = "This is a TEST MESSAGE"
+        test_message = "This is a TEST MESSAGE From Tanzim"
         print(f"Original Message is: {test_message}")
         
         encrypted_message = key_manager.encrypt_message(test_message, public_key)
