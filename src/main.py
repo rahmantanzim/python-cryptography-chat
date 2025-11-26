@@ -1,6 +1,7 @@
 #This is the entry point of the application
 import sys
 from src.security import key_manager
+from src.app import chat_app
 
 
 def cli_generate_keys():
@@ -37,6 +38,32 @@ def cli_test_crypto():
         print("Did you run `python -m src.main generate-keys` first?")
     except Exception as exc:
         print(f"[ERROR] Crypto test failed: {exc}")      
+        
+def cli_server(args):
+    if len(args) != 2:
+        print("Usage: python -m src.main server <port> <partner_public_key_path>")
+        return
+    try:
+        port = int(args[0])
+    except ValueError:
+        print(f"[ERROR] Port must be an integer.")
+        return
+    
+    partner_pub_path = args[1]
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    #########################
+    
+
 def main():
     pass
     if len(sys.argv) < 2:
