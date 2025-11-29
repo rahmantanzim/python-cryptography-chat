@@ -83,14 +83,15 @@ python -m src.chat_app server 5000
 3. 💬 Start the Client 
 python -m src.chat_app client 127.0.0.1 5000 keys/public_key.pem
 
+4. You can also test if the crypto is working fine: 
+python -m src.main test-crypto
 
 ⚠️ Limitations
-
 One-to-one chat only
 Public keys must be shared manually
 Uses pure RSA (no hybrid RSA + AES)
 
 👤 Author
-
 Tanzim Rahman
+Siddiq Husain Tashfeen 
 ENGI 9818 — Computer Software Foundations
