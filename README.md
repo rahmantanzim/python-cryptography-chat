@@ -45,7 +45,7 @@ pip install cryptography
 ***TCP client/server architecture***
 ***Real-time messaging via threads***
 ***Clean modular code (3 small modules)***
-***raceful handling of disconnects & decryption errors***
+***Graceful handling of disconnects & decryption errors***
 
 🛠️ VS Code Setup
 
@@ -71,17 +71,17 @@ project/
 ▶️ Running the Program
 
 1. Run this In two separate teminals first: 
-python -m src.chat_app genkeys
+python -m src.main generate-keys
 
 It Creates:
 keys/private_key.pem
 keys/public_key.pem
 
 2. 🖥️ Start the Server
-python -m src.chat_app server 5000
+python -m src.main server 5000 keys/public_key.pem
 
 3. 💬 Start the Client 
-python -m src.chat_app client 127.0.0.1 5000 keys/public_key.pem
+python -m src.main client 127.0.0.1 5000 keys/public_key.pem
 
 4. You can also test if the crypto is working fine: 
 python -m src.main test-crypto
